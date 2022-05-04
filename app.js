@@ -3,6 +3,9 @@ canvas 위의 마우스 감지하기
 */
 const canvas = document.getElementById("jsCanvas");
 const ctx = canvas.getContext("2d");
+const colors = document.getElementsByClassName("jsColor");
+const range = document.getElementById("jsRange");
+const mode = document.getElementById("jsMode");
 
 // pixel manipulation 설정
 canvas.width = document.getElementsByClassName("canvas")[0].offsetWidth;
@@ -13,6 +16,7 @@ ctx.strokeStyle = "#2c2c2c"; // 라인 색상
 ctx.lineWidth = 2.5; // 라인 두꼐
 
 let painting = false;
+let filling = false;
 
 // 페인팅 중지 함수
 function stopPainting() {
@@ -38,9 +42,27 @@ function onMouseMove(event) {
     }
 }
 
-// 마우스 클릭 시 함수
-function onMouseDown(event) {
-    painting = true;
+// 색상 선택 함수
+function handleColorClick(event) {
+    const color = event.target.style.backgroundColor;
+    ctx.strokeStyle = color;
+}
+
+// 선 굵기 변경 함수
+function handleRangeChange(event) {
+    const size = event.target.value;
+    ctx.lineWidth = size;
+}
+
+// 모드 변경 함수
+function handleModeClick(event) {
+    if (filling) {
+        filling = false;
+        mode.innerText = "fill";
+    } else {
+        filling = true;
+        mode.innerText = "paint";
+    }
 }
 
 if (canvas) {
@@ -52,4 +74,16 @@ if (canvas) {
     canvas.addEventListener("mouseup", stopPainting);
     // 마우스가 canvas 벗어날 때 이벤트
     canvas.addEventListener("mouseleave", stopPainting);
+}
+
+Array.from(colors).forEach((clickedColor) =>
+    clickedColor.addEventListener("click", handleColorClick)
+);
+
+if (range) {
+    range.addEventListener("input", handleRangeChange);
+}
+
+if (mode) {
+    mode.addEventListener("click", handleModeClick);
 }
