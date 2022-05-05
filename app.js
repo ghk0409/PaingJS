@@ -96,6 +96,15 @@ function handleRightClick(event) {
     event.preventDefault();
 }
 
+// 캔버스 저장 함수 (.png 포맷)
+function handleSaveClick() {
+    const image = canvas.toDataURL();
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = "OngsPaintCanvas[EXPORT]";
+    link.click();
+}
+
 if (canvas) {
     // 마우스 움직일 때 이벤트
     canvas.addEventListener("mousemove", onMouseMove);
