@@ -8,6 +8,7 @@ const range = document.getElementById("jsRange");
 const mode = document.getElementById("jsMode");
 const clear = document.getElementById("jsClear");
 const save = document.getElementById("jsSave");
+const eraser = document.getElementById("jsEraser");
 
 const INITAIL_COLOR = "#2c2c2c";
 
@@ -105,6 +106,11 @@ function handleSaveClick() {
     link.click();
 }
 
+// 지우개 버튼 함수
+function handleEraserClick() {
+    ctx.strokeStyle = "white";
+}
+
 if (canvas) {
     // 마우스 움직일 때 이벤트
     canvas.addEventListener("mousemove", onMouseMove);
@@ -138,4 +144,8 @@ if (clear) {
 
 if (save) {
     save.addEventListener("click", handleSaveClick);
+}
+
+if (eraser) {
+    eraser.addEventListener("click", handleEraserClick);
 }
